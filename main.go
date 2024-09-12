@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/SECSpell/Disillusion/apires"
+	"github.com/SECSpell/Disillusion/api"
 	"github.com/SECSpell/Disillusion/webhook"
 )
 
@@ -9,7 +9,7 @@ import (
 
 func main() {
 
-	apires.ChatGPTApi()
+	api.ChatGPTApi()
 	webhook.Webhook()
 }
 
