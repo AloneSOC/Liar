@@ -1,5 +1,7 @@
 # Disillusion ：基于生成模型的开源欺骗防御产品
 
+[English Version](https://github.com/SECSpell/Disillusion/blob/main/README.md)
+
 Disillusion（aka幻灭咒）是一款针对Linux主机，尤其是容器使用场景进行设计的欺骗防御工具。利用生成模型的仿真能力，为主机带去一种新的“蜜饵”形态----命令蜜饵。
 
 蜜饵（honeybait）是一种在欺骗防御中广泛采用的防御手段。通常为各种格式的文件，用敏感信息吸引攻击者的关注，利用文件信息引导攻击者进入蜜网；或者当蜜饵文件被打开时，就能触发防御者相关的告警能力。

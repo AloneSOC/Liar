@@ -1,5 +1,6 @@
 # Disillusion: An Open-Source Deception Defense Product Based on Generative Models
 
+[中文版本](https://github.com/SECSpell/Disillusion/blob/main/README_zh.md)
 Disillusion (aka "Illusion-Breaking Spell") is a deception defense tool designed for Linux hosts, especially for container usage scenarios. Utilizing the simulation capabilities of generative models, it brings a new form of "honeybait" to hosts - command honeybait.
 
 Honeybait is a widely adopted defense method in deception defense. Usually in various file formats, it uses sensitive information to attract attackers' attention, guiding them into honeynets using file information; or when the honeybait file is opened, it can trigger relevant alerting capabilities for defenders.
