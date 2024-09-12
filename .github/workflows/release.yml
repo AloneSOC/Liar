@@ -1,0 +1,87 @@
+name: 发布 Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: 设置 Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.23'
+          
+      - name: 构建
+        run: |
+          mkdir -p build
+          GOOS=linux GOARCH=amd64 go build -o build/disillusion-linux-amd64
+          GOOS=linux GOARCH=arm64 go build -o build/disillusion-linux-arm64
+          GOOS=windows GOARCH=amd64 go build -o build/disillusion-windows-amd64.exe
+          GOOS=darwin GOARCH=amd64 go build -o build/disillusion-darwin-amd64
+          GOOS=darwin GOARCH=arm64 go build -o build/disillusion-darwin-arm64
+          
+      - name: 创建 Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+          
+      - name: 上传 Linux (amd64) 构建
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./build/disillusion-linux-amd64
+          asset_name: disillusion-linux-amd64
+          asset_content_type: application/octet-stream
+          
+      - name: 上传 Linux (arm64) 构建
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./build/disillusion-linux-arm64
+          asset_name: disillusion-linux-arm64
+          asset_content_type: application/octet-stream
+          
+      - name: 上传 Windows 构建
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./build/disillusion-windows-amd64.exe
+          asset_name: disillusion-windows-amd64.exe
+          asset_content_type: application/octet-stream
+          
+      - name: 上传 macOS (amd64) 构建
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./build/disillusion-darwin-amd64
+          asset_name: disillusion-darwin-amd64
+          asset_content_type: application/octet-stream
+          
+      - name: 上传 macOS (arm64) 构建
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./build/disillusion-darwin-arm64
+          asset_name: disillusion-darwin-arm64
+          asset_content_type: application/octet-stream
